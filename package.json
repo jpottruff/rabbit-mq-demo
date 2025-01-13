@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "hello_world:produce": "node ./hello_world/send.js",
+    "hello_world:consume": "node ./hello_world/receive.js"
   },
   "author": "",
   "license": "ISC",

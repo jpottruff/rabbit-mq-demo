@@ -1,7 +1,8 @@
 const amqp = require("amqplib/callback_api");
+const { SERVER_URL, TEST_QUEUE } = require("./config");
 
 // Connect to server
-amqp.connect("amqp://localhost", function (error0, connection) {
+amqp.connect(SERVER_URL, function (error0, connection) {
   if (error0) {
     throw error0;
   }
@@ -14,7 +15,7 @@ amqp.connect("amqp://localhost", function (error0, connection) {
 
     // Specify queue
     // Note that we declare the queue here, as well. Because we might start the consumer before the publisher, we want to make sure the queue exists before we try to consume messages from it.
-    var queue = "hello";
+    var queue = TEST_QUEUE;
 
     channel.assertQueue(queue, {
       durable: false,

@@ -1,7 +1,8 @@
 const amqp = require("amqplib/callback_api");
+const { SERVER_URL, TEST_QUEUE } = require("./config");
 
 // Connect to server
-amqp.connect("amqp://localhost", function (error0, connection) {
+amqp.connect(SERVER_URL, function (error0, connection) {
   if (error0) {
     throw error0;
   }
@@ -13,7 +14,7 @@ amqp.connect("amqp://localhost", function (error0, connection) {
     }
 
     // Setup and send message to queue
-    var queue = "hello";
+    var queue = TEST_QUEUE;
     var msg = "Hello world";
 
     channel.assertQueue(queue, {
