@@ -20,6 +20,8 @@ amqp.connect(SERVER_URL, function (error0, connection) {
     channel.assertQueue(queue, {
       durable: true,
     });
+    // Tell RabbitMQ not to give more than 1 message to a worker at a time
+    channel.prefetch(1);
 
     // Consume the message(s)
     console.log(" [*] Waiting for messages in %s. To exit press CTRL+C", queue);
@@ -31,12 +33,16 @@ amqp.connect(SERVER_URL, function (error0, connection) {
 
         console.log(" [x] Received %s", msg.content.toString());
         // Fake work
-        setTimeout(() => console.log(" [x] Done"), secs * 1000);
+        setTimeout(() => {
+          console.log(" [x] Done");
+          // Acknowledge we are done
+          channel.ack(msg);
+        }, secs * 1000);
       },
       {
         // automatic acknowledgment mode,
         // see /docs/confirms for details
-        noAck: true,
+        noAck: false,
       }
     );
   });
