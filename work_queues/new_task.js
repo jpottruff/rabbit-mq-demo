@@ -1,9 +1,6 @@
 const amqp = require("amqplib/callback_api");
 const { SERVER_URL, TEST_QUEUE } = require("./config");
 
-/** Allows arbitrary messages to be sent from command line */
-// let msg = process.argv.slice(2).join(" ") || "Hello World!";
-
 // Connect to server
 amqp.connect(SERVER_URL, function (error0, connection) {
   if (error0) {
@@ -18,13 +15,17 @@ amqp.connect(SERVER_URL, function (error0, connection) {
 
     // Setup and send message to queue
     var queue = TEST_QUEUE;
-    var msg = "Hello world";
+    /** Allows arbitrary messages to be sent from command line */
+    var msg = process.argv.slice(2).join(" ") || "Hello World!";
 
     channel.assertQueue(queue, {
-      durable: false,
+      durable: true,
     });
 
-    channel.sendToQueue(queue, Buffer.from(msg));
+    channel.sendToQueue(queue, Buffer.from(msg), {
+      persistent: true,
+    });
+
     console.log(" [x] Sent %s", msg);
 
     // Close connection and exit
