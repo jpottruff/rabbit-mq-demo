@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "hello_world:produce": "node ./hello_world/send.js",
-    "hello_world:consume": "node ./hello_world/receive.js"
+    "hello_world:consume": "node ./hello_world/receive.js",
+    "work_queue:new_task": "node ./work_queue/new_task.js",
+    "work_queue:worker": "node ./work_queue/worker.js"
   },
   "author": "",
   "license": "ISC",
