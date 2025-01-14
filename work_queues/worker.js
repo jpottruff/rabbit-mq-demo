@@ -18,7 +18,7 @@ amqp.connect(SERVER_URL, function (error0, connection) {
     var queue = TEST_QUEUE;
 
     channel.assertQueue(queue, {
-      durable: false,
+      durable: true,
     });
 
     // Consume the message(s)
@@ -26,9 +26,16 @@ amqp.connect(SERVER_URL, function (error0, connection) {
     channel.consume(
       queue,
       function (msg) {
+        /** Helper function - will fake 1sec of work for every dot (".") in the message */
+        var secs = msg.content.toString().split(".").length - 1;
+
         console.log(" [x] Received %s", msg.content.toString());
+        // Fake work
+        setTimeout(() => console.log(" [x] Done"), secs * 1000);
       },
       {
+        // automatic acknowledgment mode,
+        // see /docs/confirms for details
         noAck: true,
       }
     );
