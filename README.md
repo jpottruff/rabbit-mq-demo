@@ -35,6 +35,22 @@ Result
 - [fair dispatch](https://www.rabbitmq.com/tutorials/tutorial-two-javascript#fair-dispatch)
   - `prefetch`
 
+#### [Publish SubScribe](https://www.rabbitmq.com/tutorials/tutorial-three-javascript)
+
+Flow
+
+1. run 2 subscribers
+2. send in the messages
+
+Result
+
+- Subscriber 1: `msg 1`, `msg 2`, ...
+- Subscriber 2: `msg 1`, `msg 2`, ...
+
+**Takeaways**
+
+- can publish messages to many receivers via named `fanout` exchanges
+
 ### Relevant packages:
 
 [amqplib](https://amqp-node.github.io/amqplib/)
@@ -68,3 +84,7 @@ Common Commands:
 `rabbitmqctl list_queues`
 
 `rabbitmqctl list_queues name messages_ready messages_unacknowledged`
+
+`rabbitmqctl list_exchanges`
+
+`rabbitmqctl list_bindings`

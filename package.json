@@ -8,7 +8,9 @@
     "hello_world:produce": "node ./hello_world/send.js",
     "hello_world:consume": "node ./hello_world/receive.js",
     "work_queue:new_task": "node ./work_queues/new_task.js",
-    "work_queue:worker": "node ./work_queues/worker.js"
+    "work_queue:worker": "node ./work_queues/worker.js",
+    "pub_sub:publish": "node ./publish_subscribe/emit_log.js",
+    "pub_sub:subscribe": "node ./publish_subscribe/receive_logs.js"
   },
   "author": "",
   "license": "ISC",
