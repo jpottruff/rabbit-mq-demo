@@ -51,7 +51,7 @@ Result
 
 - can publish messages to many receivers via named `fanout` exchanges
 
-#### (Routing w/ amqp.node client)[https://www.rabbitmq.com/tutorials/tutorial-four-javascript]
+#### [Routing w/ amqp.node client](https://www.rabbitmq.com/tutorials/tutorial-four-javascript)
 
 This example works off the assumption a `severity` (routing key) will be sent in as an argument.
 
@@ -78,6 +78,24 @@ Result
 
 - Subscriber 1 (`info | warning | error`): `Hello World`, `its warm`, `ON FIRE`
 - Subscriber 2 (`error`): `ON FIRE`
+
+#### [Topics](https://www.rabbitmq.com/tutorials/tutorial-five-javascript)
+
+There are a few example scripts in `package.json` but reading over the tutorial will make the most sense to see how the special characters work.
+
+Flow
+
+1. run 2 subscribers
+   `npm run topics:subscribe:all`
+   `npm run routing:subscribe:error`
+
+2. send in messages
+   Topic key format: `<facility>.<severity>`
+   Expected format: `npm run routing:publish <topic-key> <message>`
+
+Run
+
+Similar to the **Routing** example but with a dot `.` separated key.
 
 ### Relevant packages:
 
