@@ -10,7 +10,11 @@
     "work_queue:new_task": "node ./work_queues/new_task.js",
     "work_queue:worker": "node ./work_queues/worker.js",
     "pub_sub:publish": "node ./publish_subscribe/emit_log.js",
-    "pub_sub:subscribe": "node ./publish_subscribe/receive_logs.js"
+    "pub_sub:subscribe": "node ./publish_subscribe/receive_logs.js",
+    "routing:publish": "node ./routing/emit_log.js",
+    "routing:subscribe": "node ./routing/receive_logs.js",
+    "routing:subscribe:all": "node ./routing/receive_logs.js info warning error",
+    "routing:subscribe:error": "node ./routing/receive_logs.js error"
   },
   "author": "",
   "license": "ISC",

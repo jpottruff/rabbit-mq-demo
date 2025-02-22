@@ -1,5 +1,21 @@
 const amqp = require("amqplib/callback_api");
-const { SERVER_URL, TEST_EXCHANGE } = require("./config");
+const {
+  SERVER_URL,
+  TEST_EXCHANGE,
+  SEVERITY_INFO,
+  SEVERITY_WARNING,
+  SEVERITY_ERROR,
+} = require("./config");
+
+var args = process.argv.slice(2);
+
+// Exit if no severity to listen to is specified
+if (args.length == 0) {
+  console.log(
+    `Usage: npm run routing:subscribe [${SEVERITY_INFO}] [${SEVERITY_WARNING}] [${SEVERITY_ERROR}]`
+  );
+  process.exit(1);
+}
 
 // Connect to server
 amqp.connect(SERVER_URL, function (error0, connection) {
@@ -16,7 +32,7 @@ amqp.connect(SERVER_URL, function (error0, connection) {
     // Set up a named exchange
     var exchange = TEST_EXCHANGE;
 
-    channel.assertExchange(exchange, "fanout", {
+    channel.assertExchange(exchange, "direct", {
       durable: false,
     });
 
@@ -40,15 +56,21 @@ amqp.connect(SERVER_URL, function (error0, connection) {
         );
 
         // bind the queue to the exchange
-        channel.bindQueue(q.queue, exchange, "");
+        // NOTE: routing keys to be provided as command line arguments
+        args.forEach(function (severity_input) {
+          console.log("Listening for routing key:", severity_input);
+          channel.bindQueue(q.queue, exchange, severity_input);
+        });
 
         // consume messages
         channel.consume(
           q.queue,
           function (msg) {
-            if (msg.content) {
-              console.log(" [x] %s", msg.content.toString());
-            }
+            console.log(
+              " [x] %s: '%s'",
+              msg.fields.routingKey,
+              msg.content.toString()
+            );
           },
           {
             noAck: true,
