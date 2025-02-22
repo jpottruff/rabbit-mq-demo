@@ -116,3 +116,9 @@ Common Commands:
 `rabbitmqctl list_exchanges`
 
 `rabbitmqctl list_bindings`
+
+## Rabbit Management Console
+
+If using the attached docker compose file, a management console can also be accessed at: http://localhost:15672/
+
+Default credentials: `guest` : `guest`
