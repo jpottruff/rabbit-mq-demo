@@ -24,19 +24,20 @@ amqp.connect(SERVER_URL, function (error0, connection) {
     // EXAMPLE: `error EVERYTHINGS ON FIRE`
     const severity_input = args[0];
     const msg_input = args.slice(1).join(" ");
-    var severity = args.length > 0 ? severity_input : SEVERITY_INFO;
+    var topic_key =
+      args.length > 0 ? severity_input : `anonymous:${SEVERITY_INFO}`;
     var msg = msg_input || "Hello World!";
 
     // Specify to publish messages to TEST_EXCHANGE instead of the default nameless one
     // NOTE: using a DIRECT exchange
-    channel.assertExchange(exchange, "direct", {
+    channel.assertExchange(exchange, "topic", {
       durable: false,
     });
 
     // Publish the routing key / message (routing key will be parsed from commpand line input)
-    channel.publish(exchange, severity, Buffer.from(msg));
+    channel.publish(exchange, topic_key, Buffer.from(msg));
 
-    console.log(" [x] Sent %s", severity, msg);
+    console.log(" [x] Sent %s %s", topic_key, msg);
   });
 
   // Close connection and exit

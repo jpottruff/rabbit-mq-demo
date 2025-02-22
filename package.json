@@ -14,7 +14,14 @@
     "routing:publish": "node ./routing/emit_log.js",
     "routing:subscribe": "node ./routing/receive_logs.js",
     "routing:subscribe:all": "node ./routing/receive_logs.js info warning error",
-    "routing:subscribe:error": "node ./routing/receive_logs.js error"
+    "routing:subscribe:error": "node ./routing/receive_logs.js error",
+    "topics:publish": "node ./topics/emit_log.js",
+    "topics:subscribe": "node ./topics/receive_logs.js",
+    "topics:subscribe:all": "node ./topics/receive_logs.js '#'",
+    "topics:subscribe:all:error": "node ./topics/receive_logs.js '*.error'",
+    "topics:subscribe:toronto:all": "node ./topics/receive_logs.js 'toronto.*'",
+    "topics:subscribe:toronto:error": "node ./topics/receive_logs.js 'toronto.error'",
+    "topics:subscribe:toronto:warn:montreal:all": "node ./topics/receive_logs.js 'toronto.warning' 'montreal.*'"
   },
   "author": "",
   "license": "ISC",

@@ -3,7 +3,7 @@ const SEVERITY_WARNING = "warning";
 const SEVERITY_ERROR = "error";
 
 const SERVER_URL = "amqp://localhost";
-const TEST_EXCHANGE = "direct_logs";
+const TEST_EXCHANGE = "topic_logs";
 
 module.exports = {
   SERVER_URL,
