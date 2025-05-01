@@ -22,9 +22,10 @@ amqp.connect(SERVER_URL, function (error0, connection) {
 
     // Setup and send message to queue
     var queue = RPC_QUEUE;
+    var reply_to = "named_rpc_q"; // This could be empty as well ""
 
     channel.assertQueue(
-      "",
+      reply_to,
       {
         exclusive: true,
       },
@@ -41,6 +42,11 @@ amqp.connect(SERVER_URL, function (error0, connection) {
           q.queue,
           function (msg) {
             if (msg.properties.correlationId == correlationId) {
+              console.log(
+                "reply_to: %s [.] correlationId %s",
+                reply_to,
+                correlationId
+              );
               console.log(" [.] Got %s", msg.content.toString());
               setTimeout(function () {
                 connection.close();
