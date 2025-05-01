@@ -21,7 +21,9 @@
     "topics:subscribe:all:error": "node ./topics/receive_logs.js '*.error'",
     "topics:subscribe:toronto:all": "node ./topics/receive_logs.js 'toronto.*'",
     "topics:subscribe:toronto:error": "node ./topics/receive_logs.js 'toronto.error'",
-    "topics:subscribe:toronto:warn:montreal:all": "node ./topics/receive_logs.js 'toronto.warning' 'montreal.*'"
+    "topics:subscribe:toronto:warn:montreal:all": "node ./topics/receive_logs.js 'toronto.warning' 'montreal.*'",
+    "rpc:client": "node ./remote-procedure-call/client.js",
+    "rpc:server": "node ./remote-procedure-call/server.js"
   },
   "author": "",
   "license": "ISC",
