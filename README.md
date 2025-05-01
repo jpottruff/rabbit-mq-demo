@@ -97,6 +97,25 @@ Run
 
 Similar to the **Routing** example but with a dot `.` separated key.
 
+#### [RPC (Remote Procedure Call)](https://www.rabbitmq.com/tutorials/tutorial-six-javascript)
+
+Flow
+
+1. run the server
+   `npm run rpc:server`
+
+2. send a number in with the client
+   Expected format: `npm run rpc:client <number>`
+
+**Takeaways**
+
+- `reply_to` - the callback queue
+- `correlation_id` - a unique value for every request
+
+- flow
+  - client sends a request message (with a `reply_to` and `correlation_id`)
+  - server replies (need to send a callback queue address)
+
 ### Relevant packages:
 
 [amqplib](https://amqp-node.github.io/amqplib/)
