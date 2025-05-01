@@ -18,32 +18,30 @@ amqp.connect(SERVER_URL, function (error0, connection) {
     var queue = RPC_QUEUE;
 
     channel.assertQueue(queue, {
-      durable: true,
+      durable: false,
     });
     // Tell RabbitMQ not to give more than 1 message to a worker at a time
     channel.prefetch(1);
 
     // Consume the message(s)
-    console.log(" [*] Waiting for messages in %s. To exit press CTRL+C", queue);
-    channel.consume(
-      queue,
-      function (msg) {
-        /** Helper function - will fake 1sec of work for every dot (".") in the message */
-        var secs = msg.content.toString().split(".").length - 1;
+    console.log(" [x] Awaiting RPC requests", queue);
+    channel.consume(queue, function reply(msg) {
+      var n = parseInt(msg.content.toString());
+      console.log(" [.] fib(%d)", n);
 
-        console.log(" [x] Received %s", msg.content.toString());
-        // Fake work
-        setTimeout(() => {
-          console.log(" [x] Done");
-          // Acknowledge we are done
-          channel.ack(msg);
-        }, secs * 1000);
-      },
-      {
-        // automatic acknowledgment mode,
-        // see /docs/confirms for details
-        noAck: false,
-      }
-    );
+      var r = fibonacci(n);
+
+      channel.sendToQueue(msg.properties.replyTo, Buffer.from(r.toString()), {
+        correlationId: msg.properties.correlationId,
+      });
+
+      channel.ack(msg);
+    });
   });
 });
+
+/** This will not work for large numbers */
+function fibonacci(n) {
+  if (n == 0 || n == 1) return n;
+  else return fibonacci(n - 1) + fibonacci(n - 2);
+}
